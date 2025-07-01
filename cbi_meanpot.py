@@ -23,7 +23,7 @@ orig_df.rename(columns={'Corrected Velocity': 'Vel', 'Median Brightness': 'CBI'}
 db_path = '/Users/kfrench/Desktop/swan/swan_preprocess.db'
 
 
-# Parse flare intensity as before 
+# Parse flare intensity 
 flare_intensities = np.zeros(len(orig_df), dtype='float')
 for idx, each_flare in enumerate(orig_df['Cls']):
     fclass = each_flare[0]
