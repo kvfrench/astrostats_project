@@ -14,6 +14,9 @@ from scipy.stats import linregress, t
 
 dirname = '/Users/kfrench/Desktop/LASCO_CBI/'
 fname = 'cbi_wedge_40_sum_markedAR.xlsx'
+# cbi_wedge_40_sum_markedAR.xlsx - spreadsheet from CBI paper
+# cbi_explore_180_shift.xlsx - spreadsheet for shifted events
+
 f = dirname + fname
 
 
@@ -43,10 +46,14 @@ def reg_compare(df, x_col='CBI', y_col='Vel'):
     y_dev = y - y_mean
 
     numerator = np.sum(x_dev * y_dev)
+    print(numerator)
     denominator = np.sum(x_dev ** 2)
+    print(denominator)
     slope_manual = numerator / denominator
+    print(x_mean)
     intercept_manual = y_mean - slope_manual * x_mean
     r_manual = numerator / np.sqrt(np.sum(x_dev ** 2) * np.sum(y_dev ** 2))
+    print(np.sum(y_dev ** 2))
     r_squared_manual = r_manual ** 2
 
     # Manual standard error and t-test for slope
@@ -54,8 +61,11 @@ def reg_compare(df, x_col='CBI', y_col='Vel'):
     residuals = y - y_pred
     residual_variance = np.sum(residuals**2) / (n - 2)
     se_slope = np.sqrt(residual_variance / np.sum(x_dev ** 2))
+    print(se_slope)
     t_stat = slope_manual / se_slope
+    print(t_stat)
     p_manual = 2 * t.sf(np.abs(t_stat), df=n - 2)  # two-tailed
+    print(p_manual)
 
     # Library regression
     slope_lib, intercept_lib, r_value, p_value, std_err = linregress(x, y)
